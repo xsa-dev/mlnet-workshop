@@ -20,4 +20,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore src/MLNETWorkshop.sln
     - name: Build
-      run: dotnet src/MLNETWorkshop.sln --configuration Release --no-restore
+      run: dotnet build src/MLNETWorkshop.sln --configuration Release --no-restore
+    - name: Train
+      working-directory: 'src/TrainConsole'
+      run: dotnet run --project TrainConsole.csproj 
