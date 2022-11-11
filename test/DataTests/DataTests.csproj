@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\src\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <Target Name="CopyCustomContent" AfterTargets="BeforeBuild">
+    <Copy SourceFiles="..\..\data\true_car_listings.csv" DestinationFolder="." SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

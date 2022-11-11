@@ -11,7 +11,7 @@ namespace DataTests
     [TestClass]
     public class DataValidationTests
     {
-        private static string TRAIN_DATA_FILEPATH = @"../data/true_car_listings.csv";
+        private static string TRAIN_DATA_FILEPATH = @"../../../true_car_listings.csv";
 
         private static IEnumerable<ModelInput> Rows;
 
