@@ -9,4 +9,12 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="1.5.1" />
+  </ItemGroup>
+
+  <Target Name="CopyCustomContent" AfterTargets="BeforeBuild">
+    <Copy SourceFiles="..\..\data\true_car_listings.csv" DestinationFolder="." SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

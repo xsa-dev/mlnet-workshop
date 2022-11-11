@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+.vscode/
+
+# github build
+src/TrainConsole/true_car_listings.csv
+src/TrainConsole/MLModel.zip

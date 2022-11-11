@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Logging;
 using Web.Models;
 using Web.Services;
+using Microsoft.Extensions.ML;
+using Shared;
 
 namespace Web.Pages
 {
@@ -39,15 +41,24 @@ namespace Web.Pages
         [BindProperty]
         public IFormFile ImageUpload { get; set; }
 
-        public SelectList CarYearSL { get; } = new SelectList(Enumerable.Range(1930, (DateTime.Today.Year - 1929)).Reverse());
+        public SelectList CarYearSL { get; } =
+            new SelectList(Enumerable.Range(1930, (DateTime.Today.Year - 1929)).Reverse());
         public SelectList CarMakeSL { get; }
 
-        public IndexModel(IWebHostEnvironment env, ILogger<IndexModel> logger, ICarModelService carFileModelService)
+        private readonly PredictionEnginePool<ModelInput, ModelOutput> _pricePredictionEnginePool;
+
+        public IndexModel(
+            IWebHostEnvironment env,
+            ILogger<IndexModel> logger,
+            ICarModelService carFileModelService,
+            PredictionEnginePool<ModelInput, ModelOutput> pricePredictionEnginePool
+        )
         {
             _env = env;
             _logger = logger;
             _carModelService = carFileModelService.GetDetails();
             CarMakeSL = new SelectList(_carModelService, "Id", "Model", default, "Make");
+            _pricePredictionEnginePool = pricePredictionEnginePool;
         }
 
         public void OnGet()
@@ -57,7 +68,26 @@ namespace Web.Pages
 
         public async Task OnPostAsync()
         {
-            var selectedMakeModel = _carModelService.Where(x => CarModelDetailId == x.Id).FirstOrDefault();
+            var selectedMakeModel = _carModelService
+                .Where(x => CarModelDetailId == x.Id)
+                .FirstOrDefault();
+
+            CarInfo.Make = selectedMakeModel.Make;
+            CarInfo.Model = selectedMakeModel.Model;
+
+            ModelInput input = new ModelInput
+            {
+                Year = (float)CarInfo.Year,
+                Mileage = (float)CarInfo.Mileage,
+                Make = CarInfo.Make,
+                Model = CarInfo.Model
+            };
+
+            ModelOutput prediction = _pricePredictionEnginePool.Predict(
+                modelName: "PricePrediction",
+                example: input
+            );
+            CarInfo.Price = prediction.Score;
 
             if (ImageUpload != null)
             {
@@ -65,11 +95,6 @@ namespace Web.Pages
                 ShowImage = true;
             }
 
-            CarInfo.Make = selectedMakeModel.Make;
-            CarInfo.Model = selectedMakeModel.Model;
-
-            _logger.LogInformation($"{CarInfo.Make}  | {CarInfo.Model}");
-            _logger.LogInformation($"Predicted price for car {CarInfo.Year} from {CarInfo.Mileage} miles");
             ShowPrice = true;
         }
 
