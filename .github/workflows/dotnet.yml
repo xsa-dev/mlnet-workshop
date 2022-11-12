@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: model.zip
-        path: ./data/artifacts/${{ github.run_id }}.zip
+        path: ./models/artifacts/${{ github.run_id }}.zip
