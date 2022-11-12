@@ -17,7 +17,7 @@ namespace Shared
         public static string GetModelPath()
         {
             // var path = Path.Combine(@"../../", "MLModel.zip");
-            var path = @"../../../MLModel.zip";
+            var path = @"../../../../../models/MLModel.zip";
             Console.WriteLine($"Path: {path}");
 
             return path;

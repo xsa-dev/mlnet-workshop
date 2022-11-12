@@ -19,8 +19,5 @@
     <ProjectReference Include="..\..\src\Shared\Shared.csproj" />
   </ItemGroup>
 
-  <Target Name="CopyCustomContent" AfterTargets="BeforeBuild">
-    <Copy SourceFiles="..\..\src\TrainConsole\MLModel.zip" DestinationFolder="." SkipUnchangedFiles="true" />
-  </Target>
 
 </Project>

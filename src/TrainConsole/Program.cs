@@ -7,7 +7,7 @@ namespace TrainConsole
     class Program
     {
         private static string TRAIN_DATA_FILEPATH = @"true_car_listings.csv";
-        private static string MODEL_FILEPATH = @"MLModel.zip";
+        private static string MODEL_FILEPATH = @"../../models/MLModel.zip";
 
         static void Main(string[] args)
         {

@@ -36,7 +36,7 @@ namespace Web
                 var filePath = Path.Join(_env.WebRootPath, "data", "carmakerdetails.json");
                 return new CarFileModelService(filePath);});
             services.AddPredictionEnginePool<ModelInput, ModelOutput>()
-                .FromFile(modelName:"PricePrediction", filePath:  @"../TrainConsole/MLModel.zip");
+                .FromFile(modelName:"PricePrediction", filePath:  @"../../models/MLModel.zip");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
