@@ -6,9 +6,18 @@ namespace Shared
 {
     public class MLConfiguration
     {
-        public static string GetModelPath()
+        public static string GetModelPathWithAzure()
         {
             var path = Path.Combine(@"/media/data", GetRunId() + ".zip");
+            Console.WriteLine($"Path: {path}");
+
+            return path;
+        }
+
+        public static string GetModelPath()
+        {
+            // var path = Path.Combine(@"../../", "MLModel.zip");
+            var path = @"../../../MLModel.zip";
             Console.WriteLine($"Path: {path}");
 
             return path;

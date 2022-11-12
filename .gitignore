@@ -353,3 +353,4 @@ MigrationBackup/
 # github build
 src/TrainConsole/true_car_listings.csv
 src/TrainConsole/MLModel.zip
+test/ModelTests/MLModel.zip
