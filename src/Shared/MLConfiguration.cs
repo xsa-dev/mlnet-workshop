@@ -14,10 +14,11 @@ namespace Shared
             return path;
         }
 
-        public static string GetModelPath()
+        public static string GetModelPath(bool train = false)
         {
             // var path = Path.Combine(@"../../", "MLModel.zip");
-            var path = @"../../../../../models/MLModel.zip";
+            string root_path = train ? @"../../models/" : @"../../../../../models";
+            var path = Path.Combine(root_path, GetRunId() + ".zip");
             Console.WriteLine($"Path: {path}");
 
             return path;
